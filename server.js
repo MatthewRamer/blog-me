@@ -91,6 +91,7 @@ mongoose.connect(uri, clientOptions)
             try {
                 const userExists = await User.findOne({ email: usersEmail });
                 if (userExists) {
+                    req.session.nickname = userExists.nickname; 
                     res.redirect('/home'); // Redirects to home page if the user exists
                 } else {
                     console.log('Email not in database');

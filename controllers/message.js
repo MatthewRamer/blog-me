@@ -4,10 +4,9 @@ async function postMessage(req, res) {
     
     const { roomId, text } = req.body;
     const nickname = req.session.nickname;
+    console.log("current set nickname is:",req.session.nickname);
     console.log("message.js req body:",req.body);
-    if (!nickname) {
-        return res.status(400).send('Nickname is required');
-    }
+    
 
     const newMessage = new Message(
         { roomId: roomId,

@@ -9,9 +9,12 @@ async function newProfile(req, res) {
 // Handle profile creation
 async function createProfile(req, res) {
     const { email, password, nickname, gender, age, bio } = req.body;
-
+    
     try {
-        const hashPass = await bcrypt.hash(password, 10);
+        
+        req.session.nickname = nickname;
+        //https://stackoverflow.com/questions/48799894/trying-to-hash-a-password-using-bcrypt-inside-an-async-function
+        const hashPass = await bcrypt.hash(password, 10);//security measures
         const newUser = new User({
             email: email,
             password: hashPass,
