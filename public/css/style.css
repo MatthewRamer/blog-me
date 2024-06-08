@@ -1,0 +1,114 @@
+body{
+    margin: 0px;
+    background-color: #ADBBDA;
+    flex-grow:1;      
+    text-align:center; 
+}
+
+h1{
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    font-weight: normal;
+}
+
+.room-container {
+    font-size: 18px;
+}
+
+.room-container ul {
+    list-style-type: none;
+}
+
+.room-container ul li {
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center; 
+    border-radius: 5px;
+    border: 1px solid black;
+    margin-bottom: 10px;
+    padding: 10px; 
+}
+
+.room-container ul li a {
+    text-decoration: none;
+    color: black;
+    font-weight: bold;
+    flex-grow: 1;
+}
+
+.room-items{
+    width: 400px;
+}
+
+.id-container {
+    color: rgb(110, 110, 110);
+    text-align: right;
+}
+
+.room-container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 5px;
+}
+.message-cont{
+    border: 1px solid #ccc;
+    margin: 0px;
+    padding: 10px;
+    height: 100px;
+    overflow-y: scroll;
+    width:85%;
+    max-width:800px;
+    display: inline-block;
+}
+
+.message {
+    padding: 5px;
+    border-bottom: 1px solid #ddd;
+}
+
+
+.comment-cont{
+    display: flex;
+    flex-direction: column;
+}
+
+.user_date{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+.comment{
+    align-items: baseline;
+}
+
+.header {
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+
+    background: #3D52A0;
+    color: white;
+    padding: 5px;
+}
+
+.rm-title{
+    flex-grow:1;      
+    text-align:center; 
+}
+
+.input-div{
+    padding: 5px;
+}
+
+.back-btn{
+    padding-left:10px;
+}
+
+.back-btn a, .back-btn a:visited{
+    color:white;
+}
+
+.invis a{
+    visibility: hidden;
+    padding-right:10px;
+}

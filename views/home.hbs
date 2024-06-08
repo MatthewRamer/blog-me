@@ -1,0 +1,38 @@
+
+<div class="header">
+    <div class="rm-title">
+        <h1> Home Page</h1>
+    </div>
+</div>
+
+<div class="room-container">
+    
+    <p>This is the {{ title }} page.</p>
+    <form action="/create" method="POST">
+        <label for="roomName">Room Name:</label>
+        <input type="text" id="roomName" name="roomName" required>
+        <button type="submit">Create Chat Room</button>
+    </form>
+    
+
+    <!-- This displays every room using handlebar code-->
+    {{#if isAvailable}}
+    <ul id="list-template">
+        {{#each rooms}} <!-- Goes through each room ("this") in rooms-->
+        <li class="room-items">
+            <a class="name-container" href={{this.name}}>{{this.name}}</a>
+            <spa class="id-container">Room ID: {{this.id}}</span></li>
+        
+        {{/each}}
+    </ul>
+    {{else}}
+        <p>No rooms available.</p>
+    {{/if}}
+    <!-- This is where you make the create room form-->
+    {{!-- <form action="/create" method="POST">
+        <label for="roomName">Room Name:</label>
+        <input type="text" id="roomName" name="roomName" required>
+        <button type="submit">Create Chat Room</button>
+    </form> --}}
+</div>
+
