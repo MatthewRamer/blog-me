@@ -52,21 +52,19 @@ h1{
     padding: 5px;
 }
 .message-cont{
+    background-color: #f9f9f9;
+    height: 3%;
+    width: 1000px;
     border: 1px solid #ccc;
-    margin: 0px;
     padding: 10px;
-    height: 100px;
-    overflow-y: scroll;
-    width:85%;
-    max-width:800px;
-    display: inline-block;
+    overflow-y: auto;
 }
 
-.message {
-    padding: 5px;
-    border-bottom: 1px solid #ddd;
-}
-
+.message-cont ul {
+    list-style-type: none;
+    padding: 0;
+    height: 10px;
+  }
 
 .comment-cont{
     display: flex;
