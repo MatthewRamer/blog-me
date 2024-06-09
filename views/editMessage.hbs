@@ -7,8 +7,8 @@
 </head>
 <body>
     <h1>Edit Message</h1>
-   <form action="/sendMessage" method="PUT">
-    <input type="hidden" name="nickname" value="{{this.nickname}}">
+   <form action="/updateMessage/{{message._id}}" method="PUT">
+    <input type="hidden" name="roomId" value="{{message.roomId}}">
     <textarea name="text" placeholder="Enter your message" required></textarea>
     <button type="submit">Send</button>
 </form>

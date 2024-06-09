@@ -86,8 +86,54 @@ mongoose.connect(uri, clientOptions)
         app.get('/newProfile', (req, res) => {
             res.render('newProfile');
         });
-     
 
+
+        app.delete('/deleteMessage/:id', async (req, res) => {
+            const messageId = req.params.id;
+            const roomId = req.body.roomId; // Assuming roomId is sent as a hidden input in the form
+        
+            try {
+                await Message.findByIdAndDelete(messageId);
+                res.redirect(`/${roomId}`);
+            } catch (err) {
+                console.error('Error deleting message:', err);
+                res.status(500).send('Internal server error.');
+            }
+        });
+        
+        
+        app.get('/editMessage/:id', async (req, res) => {
+            console.log("Inside edit message", req.body);
+            const messageId = req.params.id;
+            try {
+                const message = await Message.findById(messageId).lean();
+                if (message) {
+                    res.render('editMessage', { message: message, loggedInNickname: req.session.nickname });
+                } else {
+                    res.status(404).send('Message not found.');
+                }
+            } catch (err) {
+                console.error('Error fetching message:', err);
+                res.status(500).send('Internal server error.');
+            }
+        });
+
+
+        app.post('/updateMessage', async (req, res) => {
+            const { msgId, text, roomId } = req.body;
+        
+            try {
+                await Message.findByIdAndUpdate(msgId, { text: text });
+                res.redirect(`/${roomId}`);
+            } catch (err) {
+                console.error('Error updating message:', err);
+                res.status(500).send('Internal server error.');
+            }
+        });
+        
+        
+        
+     
         app.post('/login', async (req, res) => {
             const usersEmail = req.body.email;
             console.log('Inside /login, email is:', usersEmail);
@@ -111,37 +157,14 @@ mongoose.connect(uri, clientOptions)
         app.post('/sendMessage', msgHandler.postMessage);
         
         
+    
         /*
-        app.post('/newProfile', async (req, res) => {
-            const { email, password, nickname, gender, age, bio } = req.body;
-
-            try {
-                const hashPass = await bcrypt.hash(password, 10);
-                const newUser = new User({
-                    email: email,
-                    password: hashPass,
-                    nickname: nickname,
-                    gender: gender,
-                    age: age,
-                    bio: bio
-                });
-                await newUser.save();
-                res.redirect('/home'); // Redirect to the home page after registration
-            } catch (err) {
-                console.error('Error creating user:', err);
-                res.status(500).send('Internal server error.');
-            }
-        });*/
-        
-       
-        
-       
         app.post('/editMessage', async(req, res)=>{
             const {msgId,name, text} = req.body;
             console.log("Inside editMessage: ",req.body);
-            res.render('editMessage', {text:text, nickname: name, });
+            res.render('editMessage', {text:text,loggedInNickname: req.session.nickname});
         } );
-
+        */
 
         app.post("/create", async (req, res) => {
             const roomName = req.body.roomName;
@@ -175,6 +198,7 @@ mongoose.connect(uri, clientOptions)
             }
         });
         app.get('/:roomName', roomHandler.getRoom);
+        
         
 
         app.listen(port, () => console.log(`Server listening on http://localhost:${port}`));

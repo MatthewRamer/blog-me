@@ -12,7 +12,7 @@ async function postMessage(req, res) {
         { roomId: roomId,
         nickname: nickname, 
         text: text,
-        timestamp: getDate()
+        timestamp: new Date()
     });
    
     //res.status(201).send('Message sent successfully.');

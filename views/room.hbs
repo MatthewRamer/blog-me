@@ -1,4 +1,18 @@
-<div class="header">
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>{{ title }}</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+</head>
+<body>
+    <div class="header">
     <div class="back-btn">
         <a href="/home">Home</a>
     </div>
@@ -26,16 +40,10 @@
                 <div class="user_date">
                     <strong>{{nickname}}</strong> {{timestamp}}
                     <div>
-                         {{#if  (eq ../loggedInNickname nickname)}}
-                        <form action='/editMessage' method="PUT" style="display:inline;">
-                            <input type="hidden" name="msgID" value="{{_id}} ">
-                            <input type="hidden" name="nickname" value="{{roomId}}">
-                            
-                            <button type="submit">Edit</button>
-                        </form>
-                        <form action="/deleteMessage/{{_id}}" method="DELETE" style="display:inline;">
-                            <button type="submit">Delete</button>
-                        </form>
+                         {{#if  (eq ../loggedInNickname nickname)}} <!-- Found out how to use a helper function for the eq, found in main basically just checks if the logged in username matches the posted comments name->
+                         <!-bootstrap modal model, basically just followed the tutorial online VERY HELPFUL-->
+                        <button class="btn btn-primary" data-toggle="modal" data-target="#editModal" data-id="{{_id}}" data-text="{{text}}">Edit</button>
+                           <!--DELETE BUTTON SHOULD GO HERE-->
                          {{/if }}
                     </div>
                 </div>
@@ -46,3 +54,49 @@
         </div>
     {{/each}}
 </div>
+
+<!--https://getbootstrap.com/docs/4.1/components/modal/-->
+<!--Model Start This is a popup that will appear when you click the edit button in a chatroom-->
+<div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editModalLabel">Edit Message</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="editMessageForm" action="/updateMessage" method="POST">
+                    <input type="hidden" id="msgId" name="msgId">
+                    <input type="hidden" name="roomId" value="{{roomName}}">
+                    <div class="form-group">
+                        <label for="message-text" class="col-form-label">Message:</label>
+                        <textarea class="form-control" id="message-text" name="text"></textarea>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary" form="editMessageForm">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $('#editModal').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget); // Button that triggered the modal
+        var msgId = button.data('id'); // Extract info from data-* attributes
+        var text = button.data('text');
+        var modal = $(this);
+        modal.find('#msgId').val(msgId);
+        modal.find('#message-text').val(text);
+    });
+ 
+ 
+</script>
+   
+</body>
+</html>
+
