@@ -86,7 +86,7 @@
 
 <script>
     $('#editModal').on('show.bs.modal', function (event) {
-        var button = $(event.relatedTarget); // Button that triggered the modal
+        var button = $(event.relatedTarget); //Button that triggered the modal
         var msgId = button.data('id'); // Extract info from data-* attributes
         var text = button.data('text');
         var modal = $(this);
@@ -94,7 +94,7 @@
         modal.find('#message-text').val(text);
     });
  
- 
+
 </script>
    
 </body>
