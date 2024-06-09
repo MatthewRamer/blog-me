@@ -27,6 +27,7 @@
                 <div class="user_date">
                     <strong>{{nickname}}</strong> {{timestamp}}
                     <div>
+                         {{#if  (eq ../loggedInNickname nickname)}}
                         <form action='/editMessage' method="PUT" style="display:inline;">
                             <input type="hidden" name="msgID" value="{{_id}} ">
                             <input type="hidden" name="nickname" value="{{roomId}}">
@@ -36,6 +37,7 @@
                         <form action="/deleteMessage/{{_id}}" method="DELETE" style="display:inline;">
                             <button type="submit">Delete</button>
                         </form>
+                         {{/if }}
                     </div>
                 </div>
                 <div>

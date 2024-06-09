@@ -51,7 +51,11 @@ const hbsOptions = {
     extname: 'hbs',
     defaultLayout: 'layout',
     layoutsDir: path.join(__dirname, '/views/layouts/'),
-    handlebars: allowInsecurePrototypeAccess(require('handlebars'))
+    handlebars: allowInsecurePrototypeAccess(require('handlebars')),
+    //https://handlebarsjs.com/guide/block-helpers.html#conditionals
+    helpers: {
+        eq: (a, b) => a === b
+    }
 };
 app.engine('hbs', hbs(hbsOptions));
 app.set('views', path.join(__dirname, 'views'));

@@ -116,7 +116,13 @@ h1{
 
 
 .form-cont {
+    
+}
+.form-cont2 {
     padding: 20px;
-    max-width: 400px;
+    display: flex;
+    justify-content: center;
+    
     width: 100%; /* Adjust width as needed */
+    align-content:  center;
 }
