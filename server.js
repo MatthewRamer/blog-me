@@ -151,22 +151,25 @@ mongoose.connect(uri, clientOptions)
             }
         });
         
-        
+        app.get('/login', (req, res) => {
+            res.render('login');
+        });
         
      
         app.post('/login', async (req, res) => {
-            const usersEmail = req.body.email;
-            console.log('Inside /login, email is:', usersEmail);
+            const { email, password } = req.body;
+            console.log('Inside /login, email is:', email);
+            console.log('Inside /login, password is:', password);
         
             try {
-                const userExists = await User.findOne({ email: usersEmail });
+                const userExists = await User.findOne({ email: email });
                 if (userExists) {
                     
                     req.session.nickname = userExists.nickname; 
-                    res.redirect('/home'); // Redirects to home page if the user exists
+                    res.redirect('/home'); 
                 } else {
                     console.log('Email not in database');
-                    res.redirect('/newProfile'); // Redirects to newProfile page if the user doesn't exist
+                    res.redirect('/newProfile');
                 }
             } catch (err) {
                 console.error('Error verifying user:', err);
