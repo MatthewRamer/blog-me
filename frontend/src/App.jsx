@@ -3,11 +3,14 @@ import Oauth from './components/Oauth';
 import './App.css'
 
 function App() {
+  const handleLoginClick = () => {
+    window.location.href = "http://localhost:8080/login";
+  };
 
   return (
     <div>
       <h1>Chatroom</h1>
-      <h2>Login</h2>
+      <button onClick={handleLoginClick}>Login</button>
       <Oauth />
     </div>
   );
