@@ -24,14 +24,14 @@ async function getRoom(req, res){
         const messages= await Message.find({roomId:roomName}).sort({ timestamp: -1 });
         console.log('Fetched messages:', messages);
         res.render('room', { title: 'chatroom', roomName: room.name, newRoomId: roomGenerator.roomIdGenerator(), messages: messages, loggedInNickname: req.session.nickname });
-        /*
+        
         messages.forEach((message, index) => {
             console.log(`RoomID ${message.roomId}`)
             console.log(`Message ${index + 1}:`);
             console.log(`Nickname: ${message.nickname}`);
             console.log(`Text: ${message.text}`);
             console.log(`Timestamp: ${message.timestamp}`);
-          });*/
+          });
      }
     catch(err){
         //console.log("There was an error fetching room/messages", err)

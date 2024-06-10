@@ -5,6 +5,7 @@ const hbs = require('express-handlebars');
 const session = require('express-session');
 const path = require('path');
 const mongoose = require("mongoose");
+const MongoStore = require('connect-mongo');
 const cors = require('cors');
 
 //Import handlers
@@ -43,7 +44,18 @@ app.use(cookieParser());
 //app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'frontend', 'dist'))); // Serve the static files from the React app
 
-app.use(session({ secret: 'your-secret-key', resave: false, saveUninitialized: true }));
+//app.use(session({ secret: 'your-secret-key', resave: false, saveUninitialized: true }));
+app.use(session({
+    secret: 'your-secret-key',
+    resave: false,
+    saveUninitialized: true,
+    store: MongoStore.create({
+        mongoUrl: uri,
+        mongooseConnection: mongoose.connection,
+        collectionName: 'sessions'
+    })
+}));
+
 app.use(nicknameHandler);
 
 //View engine setup
@@ -149,6 +161,7 @@ mongoose.connect(uri, clientOptions)
             try {
                 const userExists = await User.findOne({ email: usersEmail });
                 if (userExists) {
+                    
                     req.session.nickname = userExists.nickname; 
                     res.redirect('/home'); // Redirects to home page if the user exists
                 } else {

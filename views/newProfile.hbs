@@ -90,7 +90,7 @@
 
             try {
                 //sending the data from the div to the newprofile route to be handled
-                const response = await fetch('/newProfile', {
+                const response = await fetch('/newProfile', {//creating a post req to the /newProfile handler in server.js, which checks if email/nickname is in use 
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
@@ -107,13 +107,12 @@
                 else if (response.ok) {//will redirect to homepage if email is not in use
                     window.location.href = '/home';
                 } else {
-                    console.error('Failed to create profile');
+                    console.error('Failed to create profile');//error message if we couldn't successfully create a page
                 }
             } catch (error) {
                 console.error('Error:', error);
             }
         });
-
     </script>
 </body>
 </html>
