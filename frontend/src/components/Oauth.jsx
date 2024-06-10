@@ -12,7 +12,7 @@ const Oauth = () => {
         try {
             const result = await signInWithPopup(auth, provider);
             const userEmail = result.user.email;
-            console.log(userEmail); // Now email is isolated
+            console.log(userEmail);
 
             const response = await fetch('/login', {
                 method: 'POST',
@@ -25,7 +25,6 @@ const Oauth = () => {
             if (response.redirected) {
                 window.location.href = response.url;
             } else {
-                // Handle any other responses, if necessary
                 console.error('Failed to redirect');
             }
         } catch (error) {

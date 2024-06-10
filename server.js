@@ -80,6 +80,16 @@ mongoose.connect(uri, clientOptions)
           });
 
         // Create controller handlers to handle requests at each endpoint
+
+        app.get('/debug/messages', async (req, res) => {
+            try {
+                const messages = await Message.find({}).lean();
+                res.json(messages);
+            } catch (err) {
+                console.error('Failed to fetch messages:', err);
+                res.status(500).json({ success: false, message: 'Internal server error.' });
+            }
+        });
         
         app.get('/home', homeHandler.getHome);
         
@@ -90,14 +100,12 @@ mongoose.connect(uri, clientOptions)
 
         app.delete('/deleteMessage/:id', async (req, res) => {
             const messageId = req.params.id;
-            const roomId = req.body.roomId; // Assuming roomId is sent as a hidden input in the form
-        
             try {
                 await Message.findByIdAndDelete(messageId);
-                res.redirect(`/${roomId}`);
+                res.status(200).json({ success: true, message: 'Message deleted successfully.' });
             } catch (err) {
                 console.error('Error deleting message:', err);
-                res.status(500).send('Internal server error.');
+                res.status(500).json({ success: false, message: 'Internal server error.' });
             }
         });
         
@@ -149,6 +157,26 @@ mongoose.connect(uri, clientOptions)
                 }
             } catch (err) {
                 console.error('Error verifying user:', err);
+                res.status(500).send('Internal server error.');
+            }
+        });
+
+        app.get('/searchMessages/:roomId', async (req, res) => {
+            const { keyword } = req.query;
+            const { roomId } = req.params;
+            console.log(`Searching in room: ${roomId} for keyword: ${keyword}`);
+        
+            try {
+                const messages = await Message.find({
+                    text: { $regex: new RegExp(keyword, 'i') },
+                    roomId: roomId
+                }).lean();
+        
+                console.log(`Messages found for '${keyword}' in '${roomId}':`, messages);
+                console.log("Messages found:", messages);
+                res.json(messages);
+            } catch (err) {
+                console.error('Failed to fetch messages:', err);
                 res.status(500).send('Internal server error.');
             }
         });

@@ -121,6 +121,17 @@ h1{
     display: flex;
     justify-content: center;
     
-    width: 100%; /* Adjust width as needed */
+    width: 100%;
     align-content:  center;
+}
+
+.search-results {
+    padding: 10px;
+    margin-top: 20px;
+    background-color: #f8f9fa;
+    border: 1px solid #ccc;
+}
+
+mark {
+    background-color: yellow;
 }

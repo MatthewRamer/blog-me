@@ -5,36 +5,115 @@
     <meta name="viewport">
     <title>Create New Profile</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </head>
 <body>
     <h1 class="text-center" style="padding-top: 25px;">Create New Profile</h1>
 
     <div class="form-cont2">
-         <form action="/newProfile" class="form-cont" method="POST">
-        <label for="email">Email:</label>
-        <input type="email"  class="form-control"id="email" name="email" value="{{email}}" required><br>
+        <form id="createProfileForm" class="form-cont">
+            <label for="email">Email:</label>
+            <input type="email" class="form-control" id="email" name="email" required><br>
 
-        <label for="password">Password:</label>
-        <input type="password" class="form-control" id="password" name="password" required><br>
+            <label for="password">Password:</label>
+            <input type="password" class="form-control" id="password" name="password" required><br>
 
-        <label for="nickname">Nickname:</label>
-        <input type="text"  class="form-control" id="nickname" name="nickname" required><br>
+            <label for="nickname">Nickname:</label>
+            <input type="text" class="form-control" id="nickname" name="nickname" required><br>
 
-        <label for="gender">Gender:</label>
-        <select  class="form-control" id="gender" name="gender">
-            <option value="female">Female</option>
-            <option value="male">Male</option>
-            <option value="non-binary">Non-binary</option>
-            <option value="don't-want-to-answer">Don't want to answer</option>
-        </select><br>
+            <label for="gender">Gender:</label>
+            <select class="form-control" id="gender" name="gender">
+                <option value="female">Female</option>
+                <option value="male">Male</option>
+                <option value="non-binary">Non-binary</option>
+                <option value="don't-want-to-answer">Don't want to answer</option>
+            </select><br>
 
-        <label for="age">Age:</label>
-        <input  class="form-control" type="number" id="age" name="age"><br>
+            <label for="age">Age:</label>
+            <input class="form-control" type="number" id="age" name="age"><br>
 
-        <label for="bio">Bio:</label>
-        <textarea  class="form-control" id="bio" name="bio"></textarea><br>
+            <label for="bio">Bio:</label>
+            <textarea class="form-control" id="bio" name="bio"></textarea><br>
 
-        <button type="submit">Create Profile</button>
-    </form>
+            <button type="submit" class="btn btn-primary">Create Profile</button>
+        </form>
     </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="emailInUseModal" tabindex="-1" aria-labelledby="emailInUseModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="emailInUseModalLabel">Email Already in Use</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    The email address you entered is already in use. Please use a different email address.
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+       <div class="modal fade" id="userInUseModal" tabindex="-1" aria-labelledby="userInUseModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="userInUseModalLabel">Nickname is Already in Use</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    The nickname you entered is already in use. Please use a different name.
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('createProfileForm').addEventListener('submit', async function(event) {
+            //getting whatever information is in the createProfileForm form
+            event.preventDefault();
+
+            const formData = new FormData(this);
+            const data = Object.fromEntries(formData);
+
+            try {
+                //sending the data from the div to the newprofile route to be handled
+                const response = await fetch('/newProfile', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(data)
+                });
+
+                if (response.status === 409) { //waiting on a response so that we can determine if we need to show the in use modal or not
+                    $('#emailInUseModal').modal('show');//will display modal if email is found to be in use
+                } 
+                else if(response.status === 410){ //waiting on a response so that we can determine if we need to show the in use modal or not
+                    $('#userInUseModal').modal('show');//will display modal if nickname is found to be in use
+                } 
+                else if (response.ok) {//will redirect to homepage if email is not in use
+                    window.location.href = '/home';
+                } else {
+                    console.error('Failed to create profile');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        });
+
+    </script>
 </body>
+</html>
