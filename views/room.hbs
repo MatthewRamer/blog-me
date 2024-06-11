@@ -16,15 +16,15 @@
     <div class="back-btn">
         <a href="/home">Home</a>
     </div>
-    <div class="rm-title">
-        <h1>Room {{roomName}}</h1>
-    </div>
+        <div class="rm-title">
+            <h1>BlogMe: A Personal Blogging Site</h1>
+        </div>
     <div class="invis">
         <a href="/home">Home</a>
     </div>
 </div>
 
-<div class="room-container">
+<div class="room-container" style="max-width: 66%; margin: 15px auto;">
     <div class="search-bar">
         <input type="text" id="search-input" placeholder="Search messages" onkeyup="debounceSearch()" required>
     </div>
@@ -108,7 +108,18 @@
     </div>
 </div>
 
+<div class="watermark">University of California, Riverside</div>
+<div class="current-user-container">
+    <div class="current-user">Current User: {{loggedInNickname}}</div>
+    <input type="checkbox" id="logout-checkbox" style="display: none;">
+    <label for="logout-checkbox" class="logout-label" onclick="logout()"> Logout </label>
+</div>
+
 <script>
+    function logout() {
+        window.location.href = '/logout';
+    }
+
     $('#editModal').on('show.bs.modal', function (event) {
         var button = $(event.relatedTarget); // Button that triggered the modal
         var msgId = button.data('id'); // Extract info from data-* attributes

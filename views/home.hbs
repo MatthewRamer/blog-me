@@ -1,38 +1,62 @@
 
-<div class="header">
-    <div class="rm-title">
-        <h1> Home Page</h1>
+    <div class="header">
+        <div class="rm-title">
+            <h1>BlogMe: A Personal Blogging Site</h1>
+        </div>
     </div>
+
+    <div class="main-container">
+        <div class="user-list">
+            <h2>List of Users</h2>
+            {{#if isAvailable}}
+            <ul id="list-template">
+                {{#each users}}
+                <li class="user-items">
+                    <div class="user-info">
+                        <a class="name-container" href={{this.nickname}}><h3>{{this.nickname}}</h3></a>
+                        <span class="age-gender-container">Age: {{this.age}}, Gender: {{this.gender}}</span>
+                    </div>
+                    <span class="bio-container">{{this.bio}}</span>
+                </li>
+                {{/each}}
+            </ul>
+            {{else}}
+            <p>No users information available.</p>
+            {{/if}}
+        </div>
+
+        <div class="room-container">
+            <h2>Chat Rooms</h2>
+            <form action="/create" method="POST">
+                <label for="roomName" style="color: white;">Room Name:</label>
+                <input type="text" id="roomName" name="roomName" required>
+                <button type="submit">Create Chat Room</button>
+            </form>
+            {{#if isAvailable}}
+            <ul id="list-template">
+                {{#each rooms}}
+                <li class="room-items">
+                    <a class="room-name-container" href={{this.name}}>{{this.name}}</a>
+                    <span class="id-container">Room ID: {{this.id}}</span>
+                </li>
+                {{/each}}
+            </ul>
+            {{else}}
+            <p>No rooms available.</p>
+            {{/if}}
+        </div>
+    </div>
+
+    <div class="watermark">University of California, Riverside</div>
+
+<div class="current-user-container">
+    <div class="current-user">Current User: {{current_user}}</div>
+    <input type="checkbox" id="logout-checkbox" style="display: none;">
+    <label for="logout-checkbox" class="logout-label" onclick="logout()"> Logout </label>
 </div>
 
-<div class="room-container">
-    
-    <p>This is the {{ title }} page.</p>
-    <form action="/create" method="POST">
-        <label for="roomName">Room Name:</label>
-        <input type="text" id="roomName" name="roomName" required>
-        <button type="submit">Create Chat Room</button>
-    </form>
-    
-
-    <!-- This displays every room using handlebar code-->
-    {{#if isAvailable}}
-    <ul id="list-template">
-        {{#each rooms}} <!-- Goes through each room ("this") in rooms-->
-        <li class="room-items">
-            <a class="name-container" href={{this.name}}>{{this.name}}</a>
-            <spa class="id-container">Room ID: {{this.id}}</span></li>
-        
-        {{/each}}
-    </ul>
-    {{else}}
-        <p>No rooms available.</p>
-    {{/if}}
-    <!-- This is where you make the create room form-->
-    {{!-- <form action="/create" method="POST">
-        <label for="roomName">Room Name:</label>
-        <input type="text" id="roomName" name="roomName" required>
-        <button type="submit">Create Chat Room</button>
-    </form> --}}
-</div>
-
+<script>
+    function logout() {
+        window.location.href = '/logout';
+    }
+</script>
