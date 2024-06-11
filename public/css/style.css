@@ -99,7 +99,8 @@ h1{
 
 .rm-title{
     flex-grow:1;      
-    text-align:center; 
+    text-align:center;
+    align-self:center; 
 }
 
 .input-div{
@@ -236,8 +237,21 @@ h2 {
     color:rgb(231, 0, 0);
     font-size: 20px;
     background-color: #000000;
+    border-radius: 5px;
 }
 
 .logout-label:hover {
+    background-color: rgb(53, 53, 53);
+}
+
+.edit-label {
+    cursor: pointer;
+    color:rgb(0, 146, 231);
+    font-size: 20px;
+    background-color: #000000;
+    border-radius: 5px;
+}
+
+.edit-label:hover {
     background-color: rgb(53, 53, 53);
 }

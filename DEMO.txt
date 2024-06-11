@@ -1,0 +1,10 @@
+Functions to show off for demo
+
+1. Can't create multiple users with same email
+2. Can't create multiple users with same nickname
+3. Google sign in
+4. Edit user information
+5. Likes/dislikes for messages
+6. Edit/delete message
+7. Search messages
+8. logout

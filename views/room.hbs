@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>{{ title }}</title>
+    <title>{{Chatroom}}</title>
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
@@ -25,6 +25,7 @@
 </div>
 
 <div class="room-container" style="max-width: 66%; margin: 15px auto;">
+    <h1 style="font-size:60px; color:white; padding-bottom: 30px;">{{roomName}}</h1>
     <div class="search-bar">
         <input type="text" id="search-input" placeholder="Search messages" onkeyup="debounceSearch()" required>
     </div>
@@ -53,6 +54,12 @@
                 </div>
                 <div>
                     <em class="comment">{{text}}</em>
+            <div>
+                <button class="btn btn-success" onclick="likeMessage('{{_id}}')">Likes: {{likes}}</button>
+                <span id="likes-{{_id}}" style="display:none;"></span>
+                <button class="btn btn-danger" onclick="dislikeMessage('{{_id}}')">Dislikes: {{dislikes}}</button>
+                <span id="dislikes-{{_id}}" style="display:none;"></span>
+            </div>
                 
             </div>
         </div>
@@ -221,6 +228,50 @@
         clearTimeout(searchTimeout);
         searchTimeout = setTimeout(searchMessages, 300);
     }  
+
+function likeMessage(msgId) {
+    fetch('/likeMessage', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ msgId })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            document.getElementById(`likes-${msgId}`).innerText = data.likes;
+            location.reload();
+        } else {
+            console.error('Failed to like the message');
+        }
+    })
+    .catch(error => {
+        console.error('Error liking message:', error);
+    });
+}
+
+function dislikeMessage(msgId) {
+    fetch('/dislikeMessage', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ msgId })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            document.getElementById(`dislikes-${msgId}`).innerText = data.dislikes;
+            location.reload();
+        } else {
+            console.error('Failed to dislike the message');
+        }
+    })
+    .catch(error => {
+        console.error('Error disliking message:', error);
+    });
+}
 
 </script>
    
