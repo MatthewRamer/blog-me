@@ -3,6 +3,9 @@ body{
     background-color: #ADBBDA;
     flex-grow:1;      
     text-align:center;
+    background-image: url('../images/dna_background.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
 }
 
 
@@ -41,7 +44,7 @@ h1{
 }
 
 .id-container {
-    color: rgb(110, 110, 110);
+    color: rgb(0, 0, 0);
     text-align: right;
 }
 
@@ -54,10 +57,12 @@ h1{
 .message-cont{
     background-color: #f9f9f9;
     height: 3%;
-    width: 1000px;
+    width: 100%;
+    max-width: 1000px;
     border: 1px solid #ccc;
     padding: 10px;
     overflow-y: auto;
+    border-radius: 2px;
 }
 
 .message-cont ul {
@@ -85,26 +90,34 @@ h1{
     flex-wrap: nowrap;
     align-items: center;
 
-    background: #3D52A0;
+    background: #007acc;
     color: white;
-    padding: 5px;
+    padding: 15px;
+    border-bottom: 2px solid #000000;
+    
 }
 
 .rm-title{
     flex-grow:1;      
-    text-align:center; 
+    text-align:center;
+    align-self:center; 
 }
 
 .input-div{
     padding: 5px;
 }
 
-.back-btn{
+.back-btn {
     padding-left:10px;
+    font-size: 32px;
 }
 
 .back-btn a, .back-btn a:visited{
     color:white;
+}
+
+.back-btn a:hover {
+    color:rgb(158, 158, 158);
 }
 
 .invis a{
@@ -112,10 +125,6 @@ h1{
     padding-right:10px;
 }
 
-
-.form-cont {
-    
-}
 .form-cont2 {
     padding: 20px;
     display: flex;
@@ -136,3 +145,101 @@ mark {
     background-color: yellow;
 }
 
+.main-container {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+}
+
+.user-list, .room-container {  
+    padding: 20px;
+    box-shadow: inset 0 0 25px rgba(0, 0, 0, 0.5);
+    border-radius: 5px;
+    margin: 10px;
+    background: #3e3e42c2;
+}
+
+.user-list {
+    min-width: 33%;
+    flex: 0 0 30%;
+}
+
+.room-container {
+    flex: 0 0 65%;
+}
+
+.user-items, .room-items {
+    list-style: none;
+    padding: 10px;
+    margin: 5px 0;
+    background-color: #e4e4e4;
+    border: 1px solid grey;
+    border-radius: 5px;
+}
+
+.room-items:hover {
+    background-color: #c5c5c5;
+}
+
+.user-items {
+    display: flex;
+}
+
+.user-info {
+    flex: 1;
+}
+
+.name-container {
+    font-size: 24px;
+}
+
+.age-gender-container {
+    font-size: 14px;
+    color: #000000;
+    margin-top: 5px;
+}
+
+.bio-container {
+    margin-left: 20px;
+}
+
+#list-template {
+    padding: 0;
+    list-style-type: none;
+}
+
+h2 {
+    color:white;
+}
+
+.watermark {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    color: #007acc;
+    font-size: 25px;
+}
+
+.current-user-container {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    text-align: center;
+}
+
+.current-user {
+    color: black;
+    font-size: 25px;
+}
+
+.logout-label {
+    cursor: pointer;
+    color:rgb(231, 0, 0);
+    font-size: 20px;
+    background-color: #000000;
+    border-radius: 5px;
+}
+
+.logout-label:hover {
+    background-color: rgb(53, 53, 53);
+}

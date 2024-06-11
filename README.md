@@ -1,12 +1,15 @@
-# Assignment4 Concentrator
+# BlogMe:
 
-## Project Description
-<!-- you can include known bugs, design decisions, external references used... -->
+A personal blogging site.
 
-## Ethics Questions
+# How to run:
 
-### Question 1
+Open blogme directory and "npm install"
 
-> Give two possible chatroom moderation features and the reasons that you should implement each one
+Then open frontend directory and "npm install" as well as "npm build"
 
-<!-- Put your answer to question 1 here -->
+Go back to blogme directory and "npm start", then go to http://localhost:8080/
+
+# Dependencies
+
+Built with REACT framework, Express, MongoDB, NodeJS, Firebase
