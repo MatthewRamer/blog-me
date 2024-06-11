@@ -29,6 +29,9 @@
     min-width: 320px;
     min-height: 100vh;
     background-color: var(--background-color);
+    background-image: url('../images/dna_background.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
   }
   
   h2 {

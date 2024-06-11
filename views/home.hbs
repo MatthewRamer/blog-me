@@ -7,13 +7,13 @@
 
     <div class="main-container">
         <div class="user-list">
-            <h2>List of Users</h2>
+            <h2>List of Bloggers</h2>
             {{#if isAvailable}}
             <ul id="list-template">
                 {{#each users}}
                 <li class="user-items">
                     <div class="user-info">
-                        <a class="name-container" href={{this.nickname}}><h3>{{this.nickname}}</h3></a>
+                        <span class="name-container"><h3>{{this.nickname}}</h3></span>
                         <span class="age-gender-container">Age: {{this.age}}, Gender: {{this.gender}}</span>
                     </div>
                     <span class="bio-container">{{this.bio}}</span>
@@ -26,11 +26,11 @@
         </div>
 
         <div class="room-container">
-            <h2>Chat Rooms</h2>
+            <h2>BlogMes</h2>
             <form action="/create" method="POST">
-                <label for="roomName" style="color: white;">Room Name:</label>
+                <label for="roomName" style="color: white;">BlogMe Name:</label>
                 <input type="text" id="roomName" name="roomName" required>
-                <button type="submit">Create Chat Room</button>
+                <button type="submit">Create BlogMe</button>
             </form>
             {{#if isAvailable}}
             <ul id="list-template">

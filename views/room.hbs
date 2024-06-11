@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>{{ title }}</title>
+    <title>{{Chatroom}}</title>
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
@@ -25,6 +25,7 @@
 </div>
 
 <div class="room-container" style="max-width: 66%; margin: 15px auto;">
+    <h1 style="font-size:60px; color:white; padding-bottom: 30px;">{{roomName}}</h1>
     <div class="search-bar">
         <input type="text" id="search-input" placeholder="Search messages" onkeyup="debounceSearch()" required>
     </div>

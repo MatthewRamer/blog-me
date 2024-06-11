@@ -206,7 +206,7 @@ mongoose.connect(uri, clientOptions)
                     console.error('Error destroying session:', err);
                     res.status(500).send('Internal server error.');
                 } else {
-                    res.redirect('/login');
+                    res.redirect('/');
                 }
             });
         });
