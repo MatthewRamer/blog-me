@@ -243,3 +243,15 @@ h2 {
 .logout-label:hover {
     background-color: rgb(53, 53, 53);
 }
+
+.edit-label {
+    cursor: pointer;
+    color:rgb(0, 146, 231);
+    font-size: 20px;
+    background-color: #000000;
+    border-radius: 5px;
+}
+
+.edit-label:hover {
+    background-color: rgb(53, 53, 53);
+}

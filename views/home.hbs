@@ -53,10 +53,114 @@
     <div class="current-user">Current User: {{current_user}}</div>
     <input type="checkbox" id="logout-checkbox" style="display: none;">
     <label for="logout-checkbox" class="logout-label" onclick="logout()"> Logout </label>
+    <input type="checkbox" id="edit-checkbox" style="display: none;">
+    <label for="edit-checkbox" class="edit-label" onclick="toggleEditForm()"> Edit </label>
+</div>
+
+<div id="edit-modal" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="toggleEditForm()">&times;</span>
+        <form id="edit-form">
+            <label for="nickname">Nickname:</label><br>
+            <input type="text" id="nickname" name="nickname"><br><br>
+            
+            <label for="age">Age:</label><br>
+            <input type="number" id="age" name="age"><br><br>
+            
+            <label for="gender">Gender:</label><br>
+            <input type="text" id="gender" name="gender"><br><br>
+            
+            <label for="bio">Bio:</label><br>
+            <textarea id="bio" name="bio"></textarea><br><br>
+            
+            <input type="submit" value="Save">
+        </form>
+    </div>
 </div>
 
 <script>
     function logout() {
         window.location.href = '/logout';
     }
+
+    function toggleEditForm() {
+        var modal = document.getElementById('edit-modal');
+        if (modal.style.display === 'block') {
+            modal.style.display = 'none';
+        } else {
+            modal.style.display = 'block';
+        }
+    }
+
+    // Close the modal when clicking outside of it
+    window.onclick = function(event) {
+        var modal = document.getElementById('edit-modal');
+        if (event.target === modal) {
+            modal.style.display = 'none';
+        }
+    }
+
+        document.getElementById('edit-form').addEventListener('submit', async function(event) {
+        event.preventDefault();
+
+        const formData = new FormData(this);
+        const data = Object.fromEntries(formData);
+        data.currentNickname = '{{current_user}}';
+
+        try {
+            const response = await fetch('/updateProfile', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            });
+
+            if (response.ok) {
+                alert('Profile updated successfully');
+                window.location.reload();
+            } else {
+                alert('Failed to update profile');
+            }
+        } catch (error) {
+            console.error('Error:', error);
+        }
+    });
 </script>
+
+<style>
+    .modal {
+        display: none;
+        position: fixed;
+        z-index: 1;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+        background-color: rgb(0,0,0);
+        background-color: rgba(0,0,0,0.4);
+    }
+
+    .modal-content {
+        background-color: #fefefe;
+        margin: 15% auto;
+        padding: 20px;
+        border: 1px solid #888;
+        width: 20%;
+    }
+
+    .close {
+        color: #aaa;
+        float: right;
+        font-size: 28px;
+        font-weight: bold;
+    }
+
+    .close:hover,
+    .close:focus {
+        color: black;
+        text-decoration: none;
+        cursor: pointer;
+    }
+</style>

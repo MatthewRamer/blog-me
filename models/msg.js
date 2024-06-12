@@ -10,7 +10,9 @@ const messageSchema = new mongoose.Schema({
     roomId: {type:String, required: true}, 
     nickname: {type:String, required: true},
     text: {type:String, required: true},
-    timestamp: {type:Date, default: Date.now}
+    timestamp: {type:Date, default: Date.now},
+    likes: {type:Number, default:0, required:true},
+    dislikes: {type:Number, default:0, required:true}
 }, { versionKey: false });
 
 module.exports = mongoose.model("Message", messageSchema);

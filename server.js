@@ -1,5 +1,6 @@
 //Import dependencies
 const express = require('express');
+const router = express.Router();
 const cookieParser = require('cookie-parser');
 const hbs = require('express-handlebars');
 const session = require('express-session');
@@ -210,8 +211,69 @@ mongoose.connect(uri, clientOptions)
                 }
             });
         });
+
+        app.post('/updateProfile', async (req, res) => {
+            const { currentNickname, nickname, age, gender, bio } = req.body;
+
+            
+
+            try {
+                const user = await User.findOneAndUpdate(
+                    { nickname: currentNickname },
+                    { nickname, age, gender, bio },
+                    { new: true }
+                );
         
+                if (!user) {
+                    return res.status(404).send('User not found');
+                }
         
+                req.session.nickname = nickname;
+                res.send('Profile updated successfully');
+            } catch (err) {
+                console.error('Error updating profile:', err);
+                res.status(500).send('Internal server error.');
+            }
+        });
+        
+
+        app.post('/likeMessage', async (req, res) => {
+            const { msgId } = req.body;
+        
+            try {
+                const message = await Message.findById(msgId);
+                if (message) {
+                    message.likes += 1;
+                    await message.save();
+                    res.json({ success: true, likes: message.likes });
+                } else {
+                    res.status(404).json({ success: false, message: 'Message not found.' });
+                }
+            } catch (err) {
+                console.error('Error liking message:', err);
+                res.status(500).json({ success: false, message: 'Internal server error.' });
+            }
+        });
+        
+        app.post('/dislikeMessage', async (req, res) => {
+            const { msgId } = req.body;
+        
+            try {
+                const message = await Message.findById(msgId);
+                if (message) {
+                    message.dislikes += 1;
+                    await message.save();
+                    res.json({ success: true, dislikes: message.dislikes });
+                } else {
+                    res.status(404).json({ success: false, message: 'Message not found.' });
+                }
+            } catch (err) {
+                console.error('Error disliking message:', err);
+                res.status(500).json({ success: false, message: 'Internal server error.' });
+            }
+        });
+        
+
     
         /*
         app.post('/editMessage', async(req, res)=>{
